@@ -23,26 +23,22 @@ int main()
 				checkList.push(input[i]);
 			}
 			if (input[i] == ')') {
-				if (input[i] == ')') {
-					if (!checkList.empty() && checkList.top() == '(') {
+				if (!checkList.empty() && checkList.top() == '(') {
 						checkList.pop();
 					}
 					else {
 						flag = true;
 						break;
 					}
-				}
 			}
 			if (input[i] == ']') {
-				if (input[i] == ']') {
-					if (!checkList.empty() && checkList.top() == '[') {
+				if (!checkList.empty() && checkList.top() == '[') {
 						checkList.pop();
 					}
 					else {
 						flag = true;
 						break;
 					}
-				}
 			}
 		}
 		if (!flag && checkList.empty()) {
