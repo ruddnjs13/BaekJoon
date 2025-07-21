@@ -1,33 +1,35 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
-
 
 int main()
 {
-    int n, m, start = 0, answer = 0;
+	ios_base::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
 
-    string s, findStr;
+	int n, m; string str;
+	cin >> n >> m >> str;
 
-    cin >> n >> m >> s;
+	int ans = 0;
+	for (int i = 0; i < m; i++)
+	{
 
-    for (int i = 0; i < 2* (n+1)-1; i++)
-    {
-        if (i % 2 == 0)
-            findStr += 'I';
-        else
-            findStr += 'O';
-    }
+		int k = 0;
+		if (str[i] == 'O') continue;
 
-    while (true)
-    {
-        int temp = s.find(findStr, start);
-        if (temp == string::npos) break;
-        start = temp + 1;
+		while (str[i + 1] == 'O' && str[i + 2] == 'I')
+		{
+			k++;
 
-        answer++;
-    }
+			if (k == n)
+			{
+				ans++;
+				k--; 
+			}
+			i += 2;
+		}
+	}
 
-    cout << answer;
+	cout << ans;
 
-    return 0;
 }
