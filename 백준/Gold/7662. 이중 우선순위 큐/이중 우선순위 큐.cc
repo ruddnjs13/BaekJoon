@@ -1,87 +1,43 @@
 #include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-#include <unordered_map>
+#include <set>
 using namespace std;
 
-
-int main()
-{
-	int t, k, input;
-	char command;
+int main() {
+	int t, n, num;
+	char c;
 
 	cin >> t;
 
-	for (int i = 0; i < t; i++)
-	{
-		priority_queue<int>  maxQ;
-		priority_queue<int, vector<int>, greater<int>> minQ;
-		unordered_map<int, int> checkList;
+	
 
-		cin >> k;
+	for (int i = 0; i < t; i++) {
+		cin >> n;
 
-		for (int j = 0; j < k; j++)
-		{
-			cin >> command >> input;
+		multiset<int> ms;
 
-			if (command == 'I')
-			{
-				maxQ.push(input);
-				minQ.push(input);
-				checkList[input]++;
+		for (int j = 0; j < n; j++) {
+			cin >> c >> num;
+
+			if (c == 'I') {
+				ms.insert(num);
 			}
-			else
-			{
-				if (minQ.empty() || maxQ.empty()) continue;
+			else if (c == 'D') {
+				if (ms.empty()) continue;
 
-
-				else if (input == 1)
-				{
-					while (!maxQ.empty())
-					{
-						int val = maxQ.top();
-						if (checkList[val] > 0)
-						{
-							maxQ.pop();
-							checkList[val]--;
-							if (checkList[val] == 0) checkList.erase(val);
-							break;
-						}
-						maxQ.pop();
-					}
-					
+				if (num == 1) {
+					ms.erase(prev(ms.end()));
 				}
-				else
-				{
-					while (!minQ.empty())
-					{
-						int val = minQ.top();
-						if (checkList[val] > 0)
-						{
-							minQ.pop();
-							checkList[val]--;
-							if (checkList[val] == 0) checkList.erase(val);
-							break;
-						}
-						minQ.pop();
-					}
+				else if (num == -1) {
+					ms.erase(ms.begin());
 				}
 			}
 		}
 
-		while (!maxQ.empty() && checkList.find(maxQ.top()) == checkList.end())
-		{
-			maxQ.pop();
+		if (ms.empty()) {
+			cout << "EMPTY" << '\n';
 		}
-		while (!minQ.empty() && checkList.find(minQ.top()) == checkList.end())
-		{
-			minQ.pop();
+		else {
+			cout << *prev(ms.end())<< ' ' << *ms.begin() << '\n';
 		}
-
-		if (minQ.empty() || maxQ.empty())
-			cout << "EMPTY\n";
-		else
-			cout << maxQ.top() << ' ' << minQ.top() << '\n';
 	}
 }
